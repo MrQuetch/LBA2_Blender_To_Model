@@ -11,141 +11,7 @@ from bgl import *
 from bpy.props import (StringProperty, BoolProperty, IntProperty, FloatProperty,)
 from bpy.types import (Panel, Operator, AddonPreferences, PropertyGroup,)
 
-
-#from bgl import *
-
 os.system('cls')
-
-#objects = []
-
-#names = ["Cube","Cube.001"]
-
-#if (bpy.data.objects["Cube"] is not None):
-    #print("%s \n" % (bpy.data.objects["Cube"]))
-    #objects.append(bpy.data.objects["Cube"])
-
-#if (bpy.data.objects["Cube.001"] is not None):
-#    objects.append(bpy.data.objects["Cube.001"])
-
-#if (bpy.data.objects["Cube" + ".001"] is not None):
-    #objects.append(bpy.data.objects["Cube" + ".001"])
-
-#objects = [bpy.data.objects["Cube"],
-#           bpy.data.objects["Cube.001"]]
-
-#objects = [names[0],names[1]]
-#objects = [bpy.data.objects[names[0]],
-#           bpy.data.objects[names[1]]]
-
-#print(bpy.data.objects["Cube.001"].location)
-#print(bpy.data.objects["Cube.001"].matrix_world.translation)
-
-# Add a location constraint and set its properties.
-#bpy.data.objects["Cube.001"].constraints.new('LIMIT_LOCATION')
-#bpy.data.objects["Cube.001"].constraints["Limit Location"].use_min_x = True
-#bpy.data.objects["Cube.001"].constraints["Limit Location"].use_max_x = True
-#bpy.data.objects["Cube.001"].constraints["Limit Location"].use_transform_limit = True
-#bpy.data.objects["Cube.001"].constraints["Limit Location"].owner_space = "LOCAL"
-#bpy.data.objects["Cube.001"].constraints["Limit Location"].influence = 0.1
-
-# Add a rotation constraint and set its properties.
-#bpy.data.objects["Cube.001"].constraints.new('LIMIT_ROTATION')
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].use_limit_x = True
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].use_limit_y = True
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].use_limit_z = True
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].use_transform_limit = True
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].owner_space = "LOCAL"
-#bpy.data.objects["Cube.001"].constraints["Limit Rotation"].influence = 0.1
-
-# Similar to above, but does not need to use constraints.
-#bpy.data.objects["Cube.2"].lock_location[0] = True
-#bpy.data.objects["Cube.2"].lock_location[1] = True
-#bpy.data.objects["Cube.2"].lock_location[2] = True
-
-#index = 5
-#print(bpy.data.objects["Cube.00" + str(index)].location)
-
-#index = "005"
-#print(bpy.data.objects["Cube." + str(index)].location)
-
-#print(bpy.data.objects["Cube.2"].matrix_local.translation)
-
-# Function to draw a line using OpenGL code.
-#def draw_line():
-    #print("stuff")
-    #glColor3f(1.0, 0.0, 0.0)
-    #glLineWidth(2.0)
-    #glBegin(GL_LINES)
-    #glVertex3f(0.0, 0.0, 0.0)
-    #glVertex3f(1.0, 1.0, 1.0)
-    #glEnd()
-
-# The drawings will only be deleted when Blender is restarted.
-#handle = bpy.types.SpaceView3D.draw_handler_add(draw_line, (), 'WINDOW', 'POST_VIEW')
-#handle = bpy.types.SpaceView3D.draw_handler_add(draw_line, (), 'WINDOW', 'POST_PIXEL')
-#bpy.types.SpaceView3D.draw_handler_remove(handle, 'WINDOW')
-
-#start_time = time.time()
-
-# testing for-loops
-#for i in range(0, 50):
-    #for j in range(0, 50):
-        #for k in range(0, 50):
-            #print("i %d j %d k %d" % (i, j, k))
-
-#end_time = time.time()
-
-#print("The script took ", end_time - start_time, " seconds to complete.")
-
-
-
-# Change the color of this cube to red.
-#bpy.data.objects["Cube.2"].color[0] = 1
-#bpy.data.objects["Cube.2"].color[1] = 0
-#bpy.data.objects["Cube.2"].color[2] = 0
-
-#print("R: %.2f " % (bpy.data.objects["Cube.2"].color[0]))
-
-#number_index = 0
-#string_index = "0"
-
-#for i in range(0, 20):
-    #if (bpy.data.objects["Cube." + str(string_index)] is not None):
-        #print(bpy.data.objects["Cube." + str(string_index)])
-        
-        #number_index += 1
-        #string_index = str(number_index)
-
-
-        
-
-#print(objects)
-
-#print(objects[0])
-#print(objects[1])
-
-#print(bpy.context.selected_objects)
-#print(bpy.context.selected_objects[0].name)
-#print(bpy.context.selected_objects[1].name)
-#print(bpy.context.selected_objects[2].name)
-
-#if (len(bpy.context.selected_objects) == 3):
-#    print("3 objects")
-#else:
-#    print("oops")
-
-#myOps = ["mesh.primitive_cube_add", "mesh.primitive_uv_sphere_add"]
-
-#increment = [0]
-
-
-#bpy.data.objects['1'].color = (0.0, 1.0, 0.0, 1.0)
-#colors = bpy.data.objects['1'].getData(mesh=True)
-#colors.faceUV = True
-#for f in bpy.data.objects['1'].faces:
-#    f.mode |= Mesh.FaceModes.OBCOL
-#bpy.data.objects['1'].update()
-#Window.RedrawAll()
 
 # Macros
 SCALE           = 100
@@ -167,14 +33,22 @@ SPHERES_OFFSET  = 0x54
 TEXTURES        = 0x58
 TEXTURES_OFFSET = 0x5C
 
+global_scale = [0]
+
 bones = [0]
 tempBones = [0]
 
 vertices = []
 vertices_bones = []
+vertices_amount = [0]
 
 triangles = [-1]
 tempTriangles = [-1]
+
+temp_bones_parents = []
+temp_bones_vertex = []
+temp_bones_vertices = []
+temp_bones_types = []
 
 bones_parents = []
 bones_vertex = []
@@ -201,8 +75,17 @@ triangles_x3_p = []
 triangles_y3_p = []
 triangles_z3_p = []
 
+triangles_color = []
+
+temp_triangles_color = []
+
 # Populate arrays.
 for i in range(0, 530):
+    temp_bones_parents.append(0)
+    temp_bones_vertex.append(0)
+    temp_bones_vertices.append(0)
+    temp_bones_types.append(0)
+    
     bones_parents.append(0)
     bones_vertex.append(0)
     bones_vertices.append(0)
@@ -227,6 +110,9 @@ for i in range(0, 530):
     triangles_x3_p.append(0)
     triangles_y3_p.append(0)
     triangles_z3_p.append(0)
+    
+    triangles_color.append(0)
+    temp_triangles_color.append(0)
 
 
 def drawTriangle(x1, y1, z1, x2, y2, z2, x3, y3, z3):
@@ -259,12 +145,112 @@ class returnObjects(Operator):
         self.report({'INFO'}, "There are " + str(len(bpy.data.objects)) + " objects!")
         return {'FINISHED'}
 
+#mesh_current = None
+mesh_vertices = []
+mesh_vertices_x = []
+mesh_vertices_y = []
+mesh_vertices_z = []
+
+class createVertex(Operator):
+    bl_idname = 'create.vertex'
+    bl_label = 'Create vertex'
+    
+    def execute(self, context):
+        bpy.ops.mesh.primitive_cube_add()
+        
+        bpy.context.active_object.scale[0] = 0.02
+        bpy.context.active_object.scale[1] = 0.02
+        bpy.context.active_object.scale[2] = 0.02
+        
+        bpy.context.active_object.name = str(vertices_amount[0])
+        
+        vertices_amount[0] += 1
+        
+        return {'FINISHED'}
+
+class createVerticesFromMesh(Operator):
+    bl_idname = 'create.vertices'
+    bl_label = 'Create vertices'
+    
+    def execute(self, context):
+        # Change to object mode, then to edit mode.
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.mode_set(mode='EDIT')
+        
+        #mesh_current = bpy.context.selected_objects[0]
+        
+        for v in bpy.context.active_object.data.vertices:
+            print(str(v.index) + ' ' + str(v.select))
+            #test = v.matrix_world.translation.x
+            
+            if (v.select == True): 
+                # Get vertex indices and positions.
+                mesh_vertices.append(int(v.index))
+                mesh_vertices_x.append(float(v.co[0]))
+                mesh_vertices_y.append(float(v.co[1]))
+                mesh_vertices_z.append(float(v.co[2]))
+        
+        print(mesh_vertices)
+        
+        # Change to object mode.
+        bpy.ops.object.mode_set(mode='OBJECT')
+        
+        for i in range(0, len(mesh_vertices)):
+            bpy.ops.mesh.primitive_cube_add()
+            
+            bpy.context.active_object.location[0] = mesh_vertices_x[i]
+            bpy.context.active_object.location[1] = mesh_vertices_y[i]
+            bpy.context.active_object.location[2] = mesh_vertices_z[i]
+            
+            bpy.context.active_object.scale[0] = 0.02
+            bpy.context.active_object.scale[1] = 0.02
+            bpy.context.active_object.scale[2] = 0.02
+            
+            bpy.context.active_object.name = str(vertices_amount[0])
+            
+            vertices_amount[0] += 1
+        
+        # Select all of the vertices.
+        # Makes parenting to parent vertex easier.
+        for i in range(0, len(mesh_vertices)):
+            bpy.data.objects[str(i)].select = True
+        
+        # Clear all of the data.
+        #mesh_current = None
+        mesh_vertices.clear()
+        mesh_vertices_x.clear()
+        mesh_vertices_y.clear()
+        mesh_vertices_z.clear()
+        
+        return {'FINISHED'}
+
+def getVerticesInLoop(index):
+    for obj in bpy.data.objects:
+        if (obj.name == str(index)):
+            vertices_amount[0] += 1
+
+class getVertices(Operator):
+    bl_idname = 'get.vertices'
+    bl_label = 'Get vertices'
+    
+    def execute(self, context):
+        vertices_amount[0] = 0
+        
+        for i in range(0, 530):
+            getVerticesInLoop(i)
+        return {'FINISHED'}
+
+def getVerticesAsObjects(index):
+    for obj in bpy.data.objects:
+        if (obj.name == str(index)):
+            vertices.append(bpy.data.objects[str(index)])
+
 class exportModel(Operator):
     bl_idname = 'export.model'
     bl_label = "Export a model"
     
     def execute(self, context):
-        path = 'C:\\Users\\USER\\Desktop\\Parker\\Models\\LowPoly\\testModel18.txt'
+        path = 'C:\\Users\\Parker\\Desktop\\Models\\LowPoly\\testModel2.txt'
         
         outfile = open(path, 'wb')
         
@@ -284,6 +270,7 @@ class exportModel(Operator):
         # Clear vertex list before exporting.
         # Otherwise, we can only export once.
         vertices.clear()
+        vertices_bones.clear()
         
         vertex_index = 0
         vertices.append(bpy.data.objects[str(0)]) # Append first vertex separately.
@@ -296,54 +283,9 @@ class exportModel(Operator):
         
         # Unfortunately, each vertex must be checked separately.
         # For-loops generated by external C++ program.
-        for obj in bpy.data.objects:
-            if (obj.name == str(1)):
-                vertices.append(bpy.data.objects[str(1)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(2)):
-                vertices.append(bpy.data.objects[str(2)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(3)):
-                vertices.append(bpy.data.objects[str(3)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(4)):
-                vertices.append(bpy.data.objects[str(4)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(5)):
-                vertices.append(bpy.data.objects[str(5)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(6)):
-                vertices.append(bpy.data.objects[str(6)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(7)):
-                vertices.append(bpy.data.objects[str(7)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(8)):
-                vertices.append(bpy.data.objects[str(8)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(9)):
-                vertices.append(bpy.data.objects[str(9)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(10)):
-                vertices.append(bpy.data.objects[str(10)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(11)):
-                vertices.append(bpy.data.objects[str(11)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(12)):
-                vertices.append(bpy.data.objects[str(12)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(13)):
-                vertices.append(bpy.data.objects[str(13)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(14)):
-                vertices.append(bpy.data.objects[str(14)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(15)):
-                vertices.append(bpy.data.objects[str(15)])
-        for obj in bpy.data.objects:
-            if (obj.name == str(16)):
-                vertices.append(bpy.data.objects[str(16)])
+        # However, it is now in a single Python function.
+        for i in range(1, 530):
+            getVerticesAsObjects(i)
         
         vertices_bones.append(0) # Append first vertex separately.
         
@@ -372,18 +314,33 @@ class exportModel(Operator):
                 outfile.write(struct.pack('H', bones_vertices[i])) # Number Of Vertices
                 outfile.write(struct.pack('H', 0x00))
         
+        # Vertices.
         for i in range(0, len(vertices)):
             if (i == 0):
-                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().x * SCALE)))
-                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().z * SCALE)))
-                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().y * SCALE)))
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().x * global_scale[0])))
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().z * global_scale[0])))
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().y * global_scale[0])))
             else:
-                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().x - vertices[i].parent.matrix_world.to_translation().x) * SCALE)))
-                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().z - vertices[i].parent.matrix_world.to_translation().z) * SCALE)))
-                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().y - vertices[i].parent.matrix_world.to_translation().y) * SCALE)))
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().x - vertices[i].parent.matrix_world.to_translation().x) * global_scale[0])))
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().z - vertices[i].parent.matrix_world.to_translation().z) * global_scale[0])))
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().y - vertices[i].parent.matrix_world.to_translation().y) * global_scale[0])))
             
             outfile.write(struct.pack('h', vertices_bones[i]))
         
+        # Normals.
+        for i in range(0, len(vertices)):
+            if (i == 0):
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().x * global_scale[0] * 10)))
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().z * global_scale[0] * 10)))
+                outfile.write(struct.pack('h', int(vertices[i].matrix_world.to_translation().y * global_scale[0] * 10)))
+            else:
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().x - vertices[i].parent.matrix_world.to_translation().x) * global_scale[0] * 10)))
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().z - vertices[i].parent.matrix_world.to_translation().z) * global_scale[0] * 10)))
+                outfile.write(struct.pack('h', int((vertices[i].matrix_world.to_translation().y - vertices[i].parent.matrix_world.to_translation().y) * global_scale[0] * 10)))
+            
+            outfile.write(struct.pack('h', vertices_bones[i]))
+        
+        #for i in range(0, triangles[0]):
         for i in range(0, triangles[0]+1):
             outfile.write(struct.pack('B', 0x05)) # Material
             outfile.write(struct.pack('B', 0x00)) # Triangle / Quad
@@ -394,11 +351,11 @@ class exportModel(Operator):
             outfile.write(struct.pack('B', 0x00))
             outfile.write(struct.pack('B', 0x00))
             
-            outfile.write(struct.pack('h', triangles_x[i])) # Vertex Index 1
-            outfile.write(struct.pack('h', triangles_y[i])) # Vertex Index 2
+            outfile.write(struct.pack('h', triangles_y[i])) # Vertex Index 1
+            outfile.write(struct.pack('h', triangles_x[i])) # Vertex Index 2
             outfile.write(struct.pack('h', triangles_z[i])) # Vertex Index 3
             outfile.write(struct.pack('h', 0x00))
-            outfile.write(struct.pack('B', 0x40)) # Color
+            outfile.write(struct.pack('B', triangles_color[i])) # Color
             outfile.write(struct.pack('B', 0x10))
             outfile.write(struct.pack('h', 0x00))
         
@@ -415,26 +372,29 @@ class exportModel(Operator):
         outfile.seek(VERTICES_OFFSET, 0)
         outfile.write(struct.pack('h', HEADER + (bones[0] * 8)))
         
+        outfile.seek(NORMALS, 0)
+        outfile.write(struct.pack('h', len(vertices)))
+        
         outfile.seek(NORMALS_OFFSET, 0)
         outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8)))
         
         outfile.seek(UNKNOWNS_OFFSET, 0)
-        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8)))
+        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + (len(vertices) * 8)))
         
         outfile.seek(POLYGONS, 0)
         outfile.write(struct.pack('h', triangles[0]+1))
         
         outfile.seek(POLYGONS_OFFSET, 0)
-        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8)))
+        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + (len(vertices) * 8)))
         
         outfile.seek(LINES_OFFSET, 0)
-        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
+        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
         
         outfile.seek(SPHERES_OFFSET, 0)
-        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
+        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
         
         outfile.seek(TEXTURES_OFFSET, 0)
-        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
+        outfile.write(struct.pack('h', HEADER + (bones[0] * 8) + (len(vertices) * 8) + (len(vertices) * 8) + ((triangles[0]+1) * 0x14)))
         
         outfile.close()
         outfile = None
@@ -449,6 +409,24 @@ class exportAnimation(Operator):
     bl_label = 'Export Animation'
     
     def execute(self, context):
+        return {'FINISHED'}
+
+class scaleUp(Operator):
+    bl_idname = 'scale.up'
+    bl_label = 'Scale up'
+    
+    def execute(self, context):
+        global_scale[0] += 25
+        self.report({'INFO'}, "Global scale set to " + str(global_scale[0]) + ".")
+        return {'FINISHED'}
+
+class scaleDown(Operator):
+    bl_idname = 'scale.down'
+    bl_label = 'Scale down'
+    
+    def execute(self, context):
+        global_scale[0] -= 25
+        self.report({'INFO'}, "Global scale set to " + str(global_scale[0]) + ".")
         return {'FINISHED'}
 
 class alignCursor(Operator):
@@ -533,7 +511,7 @@ class saveBones(Operator):
     bl_label = 'Save bones'
     
     def execute(self, context):
-        path = 'C:\\Users\\USER\\Desktop\\Parker\\Models\\LowPoly\\testBoneSave2.txt'
+        path = 'C:\\Users\\Parker\\Desktop\\Models\\LowPoly\\testBoneSave3.txt'
         
         outfile = open(path, 'wb')
         
@@ -555,7 +533,7 @@ class loadBones(Operator):
     bl_label = 'Load bones'
     
     def execute(self, context):
-        path = 'C:\\Users\\USER\\Desktop\\Parker\\Models\\LowPoly\\testBoneSave2.txt'
+        path = 'C:\\Users\\Parker\\Desktop\\Models\\LowPoly\\testBoneSave3.txt'
         
         outfile = open(path, 'rb')
         
@@ -565,10 +543,15 @@ class loadBones(Operator):
         bones[0] = tempBones[0][0]
         
         for i in range(0, tempBones[0][0]):
-            bones_parents[i] = struct.unpack('H', outfile.read(2))
-            bones_vertex[i] = struct.unpack('H', outfile.read(2))
-            bones_vertices[i] = struct.unpack('H', outfile.read(2))
-            bones_types[i] = struct.unpack('H', outfile.read(2))
+            temp_bones_parents[i] = struct.unpack('H', outfile.read(2))
+            temp_bones_vertex[i] = struct.unpack('H', outfile.read(2))
+            temp_bones_vertices[i] = struct.unpack('H', outfile.read(2))
+            temp_bones_types[i] = struct.unpack('H', outfile.read(2))
+            
+            bones_parents[i] = temp_bones_parents[i][0]
+            bones_vertex[i] = temp_bones_vertex[i][0]
+            bones_vertices[i] = temp_bones_vertices[i][0]
+            bones_types[i] = temp_bones_types[i][0]
             
         outfile.close()
         outfile = None
@@ -607,7 +590,7 @@ class saveTriangles(Operator):
     bl_label = 'Saves triangles'
     
     def execute(self, context):
-        path = 'C:\\Users\\USER\\Desktop\\Parker\\Models\\LowPoly\\testModelSave.txt'
+        path = 'C:\\Users\\Parker\\Desktop\\Models\\LowPoly\\testModelSave2.txt'
         
         outfile = open(path, 'wb')
         
@@ -617,6 +600,7 @@ class saveTriangles(Operator):
             outfile.write(struct.pack('h', triangles_x[i]))
             outfile.write(struct.pack('h', triangles_y[i]))
             outfile.write(struct.pack('h', triangles_z[i]))
+            outfile.write(struct.pack('h', triangles_color[i]))
         
         outfile.close()
         outfile = None
@@ -628,7 +612,7 @@ class loadTriangles(Operator):
     bl_label = 'Loads triangles'
     
     def execute(self, context):
-        path = 'C:\\Users\\USER\\Desktop\\Parker\\Models\\LowPoly\\testModelSave.txt'
+        path = 'C:\\Users\\Parker\\Desktop\Models\\LowPoly\\testModelSave2.txt'
         
         outfile = open(path, 'rb')
         
@@ -636,6 +620,10 @@ class loadTriangles(Operator):
         tempTriangles[0] = struct.unpack('h', outfile.read(2))
         
         triangles[0] = tempTriangles[0][0]
+        
+        # We strip a triangle when we load them.
+        # This is the case since when we first create a triangle - we add one.
+        triangles[0] -= 1
         
         #myStr = remove_chars(tempTriangles[0][0], 'x')
         
@@ -650,10 +638,12 @@ class loadTriangles(Operator):
             temp_x[i] = struct.unpack('h', outfile.read(2))
             temp_y[i] = struct.unpack('h', outfile.read(2))
             temp_z[i] = struct.unpack('h', outfile.read(2))
+            temp_triangles_color[i] = struct.unpack('h', outfile.read(2))
             
             triangles_x[i] = temp_x[i][0]
             triangles_y[i] = temp_y[i][0]
             triangles_z[i] = temp_z[i][0]
+            triangles_color[i] = temp_triangles_color[i][0]
             
             triangles_x1_p[i] = bpy.data.objects[str(triangles_x[i])].matrix_world.translation.x
             triangles_y1_p[i] = bpy.data.objects[str(triangles_x[i])].matrix_world.translation.y
@@ -682,7 +672,65 @@ class loadTriangles(Operator):
             #my_mesh.from_pydata(vert,edge,[])
             my_mesh.from_pydata(vert,[],face)
             my_mesh.update(calc_edges=True)
-        
+            
+            mat = bpy.data.materials.get("Material_" + str(i))
+            if (mat is None):
+                mat = bpy.data.materials.new(name="Material_" + str(i))
+            
+            if (my_obj.data.materials):
+                my_obj.data.materials[0] = mat
+            else:
+                my_obj.data.materials.append(mat)
+            
+            # Red
+            if (triangles_color[i] == 0x40):
+                mat.diffuse_color[0] = 255
+                mat.diffuse_color[1] = 0
+                mat.diffuse_color[2] = 0
+                
+            # Green
+            if (triangles_color[i] == 0x80):
+                mat.diffuse_color[0] = 0
+                mat.diffuse_color[1] = 255
+                mat.diffuse_color[2] = 0
+            
+            # Blue
+            if (triangles_color[i] == 0xC0):
+                mat.diffuse_color[0] = 0
+                mat.diffuse_color[1] = 0
+                mat.diffuse_color[2] = 255
+            
+            # Brown
+            if (triangles_color[i] == 0x10):
+                mat.diffuse_color[0] = 90
+                mat.diffuse_color[1] = 64
+                mat.diffuse_color[2] = 32
+            
+            # Tan
+            if (triangles_color[i] == 0x20):
+                mat.diffuse_color[0] = 190
+                mat.diffuse_color[1] = 150
+                mat.diffuse_color[2] = 120
+            
+            # Gray
+            if (triangles_color[i] == 0x30):
+                mat.diffuse_color[0] = 64
+                mat.diffuse_color[1] = 64
+                mat.diffuse_color[2] = 64
+            
+            # Orange
+            if (triangles_color[i] == 0x50):
+                mat.diffuse_color[0] = 220
+                mat.diffuse_color[1] = 120
+                mat.diffuse_color[2] = 80
+            
+            # Yellow
+            if (triangles_color[i] == 0x60):
+                mat.diffuse_color[0] = 255
+                mat.diffuse_color[1] = 255
+                mat.diffuse_color[2] = 0
+            
+            mat.diffuse_intensity = 0.001
         
         outfile.close()
         outfile = None
@@ -728,6 +776,28 @@ class createTriangle(Operator):
         my_mesh.from_pydata(vert,[],face)
         my_mesh.update(calc_edges=True)
         
+        
+        
+        mat = bpy.data.materials.get("Material_" + str(triangles[0]))
+        if (mat is None):
+            mat = bpy.data.materials.new(name="Material_" + str(triangles[0]))
+        
+        if (my_obj.data.materials):
+            my_obj.data.materials[0] = mat
+        else:
+            my_obj.data.materials.append(mat)
+        
+        #mat = bpy.context.selected_objects[0].data.materials.new(name="Material")
+        #mat = bpy.data.materials.new(name="Material")
+        #my_obj.data.materials[0] = mat
+        
+        # If it's black - which it is here - it needs a color assigned to it.
+        mat.diffuse_color[0] = 0
+        mat.diffuse_color[1] = 0
+        mat.diffuse_color[2] = 0
+        
+        mat.diffuse_intensity = 0.001
+        
         return {'FINISHED'}
 
 class deleteTriangle(Operator):
@@ -752,6 +822,7 @@ class deleteTriangle(Operator):
                             triangles_z[j] = triangles_z[j + 1]
                             
                             if (j != (triangles[0])):
+                                bpy.data.objects["triangle" + str(j + 1)].active_material.name = ("Material_" + str(j))
                                 bpy.data.objects["triangle" + str(j + 1)].name = ("triangle" + str(j))
                             else:
                                 bpy.data.objects.remove(bpy.context.selected_objects[0], True)
@@ -793,6 +864,168 @@ class flipTriangle(Operator):
         triangles_y[int(trianglesStr)] = tempX
         return {'FINISHED'}
 
+class colorTriangle(Operator):
+    bl_idname = 'color.triangle'
+    bl_label = 'Color triangle'
+    
+    def execute(self, context):
+        #print(pal.colors.active)
+        #print(pal.colors[0])
+        print(pal.color.active[0])
+        return {'FINISHED'}
+
+class colorRed(Operator):
+    bl_idname = 'color.red'
+    bl_label = 'Color red'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle red.
+        triangles_color[int(trianglesStr)] = 0x40
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 255
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 0
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 0
+        
+        return {'FINISHED'}
+
+class colorGreen(Operator):
+    bl_idname = 'color.green'
+    bl_label = 'Color green'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle green.
+        triangles_color[int(trianglesStr)] = 0x80
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 0
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 255
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 0
+        
+        return {'FINISHED'}
+
+class colorBlue(Operator):
+    bl_idname = 'color.blue'
+    bl_label = 'Color blue'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle blue.
+        triangles_color[int(trianglesStr)] = 0xC0
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 0
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 0
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 255
+        
+        return {'FINISHED'}
+
+class colorBrown(Operator):
+    bl_idname = 'color.brown'
+    bl_label = 'Color brown'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle brown.
+        triangles_color[int(trianglesStr)] = 0x10
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 90
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 64
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 32
+        
+        return {'FINISHED'}
+
+class colorTan(Operator):
+    bl_idname = 'color.tan'
+    bl_label = 'Color tan'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle tan.
+        triangles_color[int(trianglesStr)] = 0x20
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 190
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 150
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 120
+        
+        return {'FINISHED'}
+
+class colorGray(Operator):
+    bl_idname = 'color.gray'
+    bl_label = 'Color gray'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle gray.
+        triangles_color[int(trianglesStr)] = 0x30
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 64
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 64
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 64
+        
+        return {'FINISHED'}
+
+class colorOrange(Operator):
+    bl_idname = 'color.orange'
+    bl_label = 'Color orange'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle orange.
+        triangles_color[int(trianglesStr)] = 0x50
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 220
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 120
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 80
+        
+        return {'FINISHED'}
+
+class colorYellow(Operator):
+    bl_idname = 'color.yellow'
+    bl_label = 'Color yellow'
+    
+    def execute(self, context):
+        # Get the triangle name.
+        trianglesStr = bpy.context.selected_objects[0].name
+        trianglesStr = trianglesStr.lstrip('triangle')
+        
+        # Color the triangle orange.
+        triangles_color[int(trianglesStr)] = 0x60
+        
+        # Color in the 3D viewport.
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[0] = 255
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[1] = 255
+        bpy.context.selected_objects[0].data.materials[0].diffuse_color[2] = 0
+        
+        return {'FINISHED'}
+
 class updateTriangles(Operator):
     bl_idname = 'update.triangles'
     bl_label = 'Update triangles'
@@ -813,6 +1046,11 @@ class updateTriangles(Operator):
         
         return {'FINISHED'}
 
+def removeTrianglesAsObjects(index):
+    for obj in bpy.data.objects:
+        if (obj.name == "triangle" + str(index)):
+            bpy.data.objects.remove(bpy.data.objects["triangle" + str(index)], True)
+
 # Doesn't really clear the GL triangles, but sets all their positions to 0 and sets the triangles counter to 0.
 # We just use normal triangles in the end anyway.
 class clearTriangles(Operator):
@@ -820,7 +1058,8 @@ class clearTriangles(Operator):
     bl_label = 'Clears triangles'
     
     def execute(self, context):
-        for i in range(0, triangles[0]+1):
+        #for i in range(0, triangles[0]):
+        for i in range(0, 530):
             triangles_x[i] = 0
             triangles_y[i] = 0
             triangles_z[i] = 0
@@ -836,8 +1075,10 @@ class clearTriangles(Operator):
             triangles_x3_p[i] = 0
             triangles_y3_p[i] = 0
             triangles_z3_p[i] = 0
-            
-            bpy.data.objects.remove(bpy.data.objects["triangle" + str(i)], True)
+        
+        #bpy.data.objects.remove(bpy.data.objects["triangle" + str(i)], True)
+        for i in range(0, 530):
+            removeTrianglesAsObjects(i)
         
         triangles[0] = -1
         return {'FINISHED'}
@@ -850,8 +1091,8 @@ class LBA2Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         
-        button_return_objects = layout.row()
-        button_return_objects.operator('return.objects', text='Return Objects Count')
+        #button_return_objects = layout.row()
+        #button_return_objects.operator('return.objects', text='Return Objects Count')
         
         button_export_model = layout.row()
         button_export_model.alert = True # Shows button as red.
@@ -861,8 +1102,31 @@ class LBA2Panel(bpy.types.Panel):
         button_export_animation = layout.row()
         button_export_animation.operator('export.animation', text='Export Animation')
         
-        button_align_cursor_to_vertex = layout.row()
-        button_align_cursor_to_vertex.operator('align.cursor', text='Align Cursor To Vertex')
+        button_scale_up_animation = layout.row()
+        button_scale_up_animation.operator('scale.up', text='Scale Up')
+        
+        button_scale_down_animation = layout.row()
+        button_scale_down_animation.operator('scale.down', text='Scale Down')
+        
+        box_vertex_properties = layout.box()
+        
+        box_vertex_label = box_vertex_properties.row()
+        box_vertex_label.label(text='Vertex Properties:')
+        
+        button_vertex = box_vertex_properties.row()
+        button_vertex.operator('create.vertex', text='Create Vertex')
+        
+        button_vertices_mesh = box_vertex_properties.row()
+        button_vertices_mesh.operator('create.vertices', text='Create Vertices From Mesh')
+        
+        button_vertices_get = box_vertex_properties.row()
+        button_vertices_get.operator('get.vertices', text='Get Existing Vertices')
+        
+        verticesAmount = box_vertex_properties.row()
+        verticesAmount.label(text='vertices: ' + str(vertices_amount[0]))
+        
+        #button_align_cursor_to_vertex = layout.row()
+        #button_align_cursor_to_vertex.operator('align.cursor', text='Align Cursor To Vertex')
         
         box_bone_properties = layout.box()
         
@@ -906,6 +1170,9 @@ class LBA2Panel(bpy.types.Panel):
         button_flip_triangle = box_triangle_properties.row()
         button_flip_triangle.operator('flip.triangle', text='Flip Triangle')
         
+        #button_color_triangle = box_triangle_properties.row()
+        #button_color_triangle.operator('color.triangle', text='Color Triangle')
+        
         button_save_triangles = box_triangle_properties.row()
         button_save_triangles.alert = True
         button_save_triangles.operator('save.triangles', text='Save Triangles')
@@ -919,54 +1186,86 @@ class LBA2Panel(bpy.types.Panel):
         button_clear_triangles = box_triangle_properties.row()
         button_clear_triangles.operator('clear.triangles', text='Clear Triangles')
         
+        triangleAmount = box_triangle_properties.row()
+        triangleAmount.label(text="triangles: " + str(triangles[0]+1))
+        
+        for i in range(0, triangles[0]+1):
+            amount = box_triangle_properties.row()
+            #amount.label(text="v1: %d, v2: %d, v3: %d " % (triangles_x[i], triangles_y[i], triangles_z[i]))
+            amount.label(text="v1: %d, v2: %d, v3: %d, color: %d " % (triangles_x[i], triangles_y[i], triangles_z[i], triangles_color[i]))
+        
         box_colors = layout.box()
         box_colors_label = box_colors.row()
         box_colors_label.label(text='Color Properties:')
+        
+        button_color_red = box_colors.row()
+        button_color_red.operator('color.red', text='Color Red')
+        
+        button_color_green = box_colors.row()
+        button_color_green.operator('color.green', text='Color Green')
+        
+        button_color_blue = box_colors.row()
+        button_color_blue.operator('color.blue', text='Color Blue')
+        
+        button_color_brown = box_colors.row()
+        button_color_brown.operator('color.brown', text='Color Brown')
+        
+        button_color_tan = box_colors.row()
+        button_color_tan.operator('color.tan', text='Color Tan')
+        
+        button_color_gray = box_colors.row()
+        button_color_gray.operator('color.gray', text='Color Gray')
+        
+        button_color_orange = box_colors.row()
+        button_color_orange.operator('color.orange', text='Color Orange')
+        
+        button_color_yellow = box_colors.row()
+        button_color_yellow.operator('color.yellow', text='Color Yellow')
         
         ts = context.tool_settings
         if ts.image_paint.palette:
             box_colors.template_palette(ts.image_paint, "palette", color=True)
         
-        box_triangles = layout.box()
+        #box_triangles = layout.box()
         
         # Print names of selected objects.
-        if (len(bpy.context.selected_objects) <= 0):
-            warning = box_triangles.row()
-            warning.label(text="Please select at least three objects!")
+        #if (len(bpy.context.selected_objects) <= 0):
+        #    warning = box_triangles.row()
+        #    warning.label(text="Please select at least three objects!")
         
-        if (len(bpy.context.selected_objects) == 1):
-            obj1 = box_triangles.row()
-            obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
+        #if (len(bpy.context.selected_objects) == 1):
+        #    obj1 = box_triangles.row()
+        #    obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
         
-        if (len(bpy.context.selected_objects) == 2):
-            obj1 = box_triangles.row()
-            obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
+        #if (len(bpy.context.selected_objects) == 2):
+        #    obj1 = box_triangles.row()
+        #    obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
             
-            obj2 = box_triangles.row()
-            obj2.label(text="v2 = " + str(bpy.context.selected_objects[1].name))
+        #    obj2 = box_triangles.row()
+        #    obj2.label(text="v2 = " + str(bpy.context.selected_objects[1].name))
         
-        if (len(bpy.context.selected_objects) == 3):
-            obj1 = box_triangles.row()
-            obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
+        #if (len(bpy.context.selected_objects) == 3):
+        #    obj1 = box_triangles.row()
+        #    obj1.label(text="v1 = " + str(bpy.context.selected_objects[0].name))
             
-            obj2 = box_triangles.row()
-            obj2.label(text="v2 = " + str(bpy.context.selected_objects[1].name))
+        #    obj2 = box_triangles.row()
+        #    obj2.label(text="v2 = " + str(bpy.context.selected_objects[1].name))
             
-            obj3 = box_triangles.row()
-            obj3.label(text="v3 = " + str(bpy.context.selected_objects[2].name))
+        #    obj3 = box_triangles.row()
+        #    obj3.label(text="v3 = " + str(bpy.context.selected_objects[2].name))
         
-        if (len(bpy.context.selected_objects) >= 4):
-            warning = box_triangles.row()
-            warning.label(text="Please select only three objects!")
+        #if (len(bpy.context.selected_objects) >= 4):
+        #    warning = box_triangles.row()
+        #    warning.label(text="Please select only three objects!")
         
-        box_triangles_amount = layout.box()
+        #box_triangles_amount = layout.box()
         
-        triangleAmount = box_triangles_amount.row()
-        triangleAmount.label(text="triangles: " + str(triangles[0]))
+        #triangleAmount = box_triangles_amount.row()
+        #triangleAmount.label(text="triangles: " + str(triangles[0]+1))
         
-        for i in range(0, triangles[0]+1):
-            amount = box_triangles_amount.row()
-            amount.label(text="v1: %d, v2: %d, v3: %d " % (triangles_x[i], triangles_y[i], triangles_z[i]))
+        #for i in range(0, triangles[0]+1):
+            #amount = box_triangles_amount.row()
+            #amount.label(text="v1: %d, v2: %d, v3: %d " % (triangles_x[i], triangles_y[i], triangles_z[i]))
             
             # Works with GL commands, but needs to be refreshed somehow.
             # We just disregard it for now.
@@ -975,10 +1274,15 @@ class LBA2Panel(bpy.types.Panel):
 
 def register():
     bpy.utils.register_class(LBA2Panel)
-    bpy.utils.register_class(returnObjects)
+    #bpy.utils.register_class(returnObjects)
     bpy.utils.register_class(exportModel)
     bpy.utils.register_class(exportAnimation)
-    bpy.utils.register_class(alignCursor)
+    bpy.utils.register_class(scaleUp)
+    bpy.utils.register_class(scaleDown)
+    bpy.utils.register_class(createVertex)
+    bpy.utils.register_class(createVerticesFromMesh)
+    bpy.utils.register_class(getVertices)
+    #bpy.utils.register_class(alignCursor)
     bpy.utils.register_class(setBoneRotation)
     bpy.utils.register_class(setBoneTranslation)
     bpy.utils.register_class(saveBones)
@@ -987,17 +1291,31 @@ def register():
     bpy.utils.register_class(createTriangle)
     bpy.utils.register_class(deleteTriangle)
     bpy.utils.register_class(flipTriangle)
+    bpy.utils.register_class(colorTriangle)
     bpy.utils.register_class(saveTriangles)
     bpy.utils.register_class(loadTriangles)
     bpy.utils.register_class(updateTriangles)
     bpy.utils.register_class(clearTriangles)
+    bpy.utils.register_class(colorRed)
+    bpy.utils.register_class(colorGreen)
+    bpy.utils.register_class(colorBlue)
+    bpy.utils.register_class(colorBrown)
+    bpy.utils.register_class(colorTan)
+    bpy.utils.register_class(colorGray)
+    bpy.utils.register_class(colorOrange)
+    bpy.utils.register_class(colorYellow)
 
 def unregister():
     bpy.utils.unregister_class(LBA2Panel)
-    bpy.utils.unregister_class(returnObjects)
+    #bpy.utils.unregister_class(returnObjects)
     bpy.utils.unregister_class(exportModel)
     bpy.utils.unregister_class(exportAnimation)
-    bpy.utils.unregister_class(alignCursor)
+    bpy.utils.unregister_class(scaleUp)
+    bpy.utils.unregister_class(scaleDown)
+    bpy.utils.unregister_class(createVertex)
+    bpy.utils.unregister_class(createVerticesFromMesh)
+    bpy.utils.unregister_class(getVertices)
+    #bpy.utils.unregister_class(alignCursor)
     bpy.utils.unregister_class(setBoneRotation)
     bpy.utils.unregister_class(setBoneTranslation)
     bpy.utils.unregister_class(saveBones)
@@ -1006,10 +1324,19 @@ def unregister():
     bpy.utils.unregister_class(createTriangle)
     bpy.utils.unregister_class(deleteTriangle)
     bpy.utils.unregister_class(flipTriangle)
+    bpy.utils.unregister_class(colorTriangle)
     bpy.utils.unregister_class(saveTriangles)
     bpy.utils.unregister_class(loadTriangles)
     bpy.utils.unregister_class(updateTriangles)
     bpy.utils.unregister_class(clearTriangles)
+    bpy.utils.unregister_class(colorRed)
+    bpy.utils.unregister_class(colorGreen)
+    bpy.utils.unregister_class(colorBlue)
+    bpy.utils.unregister_class(colorBrown)
+    bpy.utils.unregister_class(colorTan)
+    bpy.utils.unregister_class(colorGray)
+    bpy.utils.unregister_class(colorOrange)
+    bpy.utils.unregister_class(colorYellow)
 
 if __name__ == "__main__":
     register()
@@ -1038,31 +1365,6 @@ ts.image_paint.palette = pal
 
 #bpy.ops.palette.color_add() = False
 
-
 #children = getChildren(bpy.data.objects['1'])
 #print("%d " % (len(children)))
 #print("%d " % (len(getChildren(bpy.data.objects['1']))))
-
-#class ScaleOperator(Operator):
-    #bl_idname = 'my.scale'
-    #bl_label = 'My scale operator'
-    
-    #def draw(self, context):
-        #bpy.ops.object.transform_apply(scale=True)
-        #self.report({'INFO'}, 'Scale applied!')
-        #return {'FINISHED'}
-
-        #button = layout.row()
-        #button.operator('my.scale', text='Apply Scale')
-        
-        #slider_x = layout.row()
-        #slider_x.prop(bpy.context.selected_objects[0], 'scale', index=0, text='Scale x:')
-        
-        #slider_y = layout.row()
-        #slider_y.prop(bpy.context.selected_objects[0], 'scale', index=1, text='Scale y:')
-        
-        #slider_z = layout.row()
-        #slider_z.prop(bpy.context.selected_objects[0], 'scale', index=2, text='Scale z:')
-        
-        #inc_button = layout.row()
-        #inc_button.operator('my.increment', text='Apply increment')

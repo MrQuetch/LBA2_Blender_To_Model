@@ -8,9 +8,16 @@ To use your model in Little Big Adventure 2 (Twinsen's Odyssey) game, use Zink's
 This has only been written and tested on Windows 10 with Blender 2.79b. If you plan to port it to other operating systems in other languages, please do - just be sure to let me know. I don't know much about licensing, but all permission to port is welcome.
 
 Features that still need to be added:
+
 - Full LBA2 color palette
 - Textured triangles
 - Colored quadrilaterals
 - Textured quadrilaterals
+- Different render types
 - Animation support
 - Animation preview
+
+Some examples from using the above program (Twinsen on a motorcycle):
+
+![](Images/Example_1.bmp)
+![](Images/Example_2.bmp)
